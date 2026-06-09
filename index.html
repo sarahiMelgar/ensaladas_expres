@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Ensalada Exprés | Arma tu ensalada</title>
-<meta name="description" content="Crea tu propia ensalada fresca en minutos. Ingredientes de calidad, selecciona tus favoritos y envía tu pedido por WhatsApp.">
+<title>Ensalada Exprés | Arma tu ensalada a tu gusto</title>
+<meta name="description" content="Crea ensaladas personalizadas, selecciona base (lechuga y/o pasta), proteínas, verduras, frutas y aderezos. Múltiples ensaladas en un solo pedido.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <style>
   * {
@@ -18,28 +18,17 @@
     font-family: 'Inter', sans-serif;
     color: #2c2b28;
     scroll-behavior: smooth;
-    overflow-x: hidden;
-  }
-
-  :root {
-    --verde-vivo: #3ba53b;
-    --verde-oscuro: #2a7a2a;
-    --naranja: #ff9f4a;
-    --amarillo-miel: #ffd966;
-    --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 20px 30px -8px rgba(0, 0, 0, 0.15);
-    --radius-card: 32px;
   }
 
   .container {
     width: 92%;
-    max-width: 1280px;
+    max-width: 1400px;
     margin: 0 auto;
     position: relative;
     z-index: 5;
   }
 
-  /* HERO (sin botón) */
+  /* Hero sin botón de WhatsApp */
   .hero {
     background: linear-gradient(125deg, #ffd89b 0%, #c7e9b0 100%);
     padding: 2rem 1.5rem 5rem 1.5rem;
@@ -108,60 +97,82 @@
     margin-bottom: 0;
   }
 
-  /* Sección Arma tu ensalada (mejorada) */
+  /* Layout principal */
+  .main-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem 0 2rem;
+  }
+
+  .configurador {
+    flex: 2;
+    min-width: 280px;
+  }
+
+  .carrito {
+    flex: 1.2;
+    background: white;
+    border-radius: 48px;
+    padding: 1.5rem;
+    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+    border: 1px solid #ffefcf;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+  }
+
+  /* Tarjeta de armado */
   .pedido-box {
     background: white;
-    padding: 2rem;
+    padding: 1.8rem;
     border-radius: 48px;
-    margin: 2rem 0 2rem;
     box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
     border: 1px solid #ffefcf;
   }
 
   .section-title {
-    text-align: center;
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     font-weight: 800;
     background: linear-gradient(120deg, #d45c2c, #f1b82e);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    margin: 0 0 1.5rem 0;
+    margin-bottom: 1.2rem;
     letter-spacing: -0.5px;
   }
 
   .pedido-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
   }
 
   .grupo {
     background: #fffaf3;
-    padding: 1.2rem 1.2rem;
+    padding: 1rem;
     border-radius: 28px;
-    transition: all 0.2s;
     border: 1px solid #ffe0b5;
   }
 
   .grupo h3 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #d45c2c;
     margin-bottom: 0.8rem;
     border-left: 4px solid #ffb347;
-    padding-left: 12px;
+    padding-left: 10px;
   }
 
   .grupo label {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 10px 0;
+    gap: 8px;
+    margin: 8px 0;
     cursor: pointer;
     font-weight: 500;
-    padding: 4px 0;
+    font-size: 0.9rem;
   }
 
   .grupo input {
@@ -171,143 +182,210 @@
     accent-color: #f68b1f;
   }
 
-  /* Resumen y botón */
-  .resumen {
-    text-align: center;
-    background: #fff3e0;
-    padding: 1.5rem;
-    border-radius: 40px;
-    margin-top: 1rem;
-  }
-
-  .resumen h3 {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    color: #5a3a1a;
-  }
-
-  #total {
-    font-size: 3rem;
-    font-weight: 800;
-    color: #25D366;
-    background: #ffffff;
-    padding: 0.2rem 1rem;
-    border-radius: 60px;
-    display: inline-block;
-    margin-left: 10px;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: #25D366;
-    color: white;
-    font-weight: 700;
-    padding: 1rem 2rem;
-    border-radius: 60px;
-    font-size: 1.2rem;
-    transition: all 0.25s ease;
-    box-shadow: 0 8px 18px rgba(37,211,102,0.3);
-    border: none;
-    cursor: pointer;
+  .acciones-formulario {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
     margin-top: 0.5rem;
   }
 
-  .btn-primary:hover {
-    transform: translateY(-4px);
-    background: #1da15a;
-    box-shadow: 0 14px 22px -8px rgba(37,211,102,0.5);
+  .btn-secundario {
+    background: #f0e0c0;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #5a3a1a;
+  }
+  .btn-secundario:hover {
+    background: #e0ceaa;
   }
 
-  /* Sección Ideas de ensalada */
+  .btn-primario {
+    background: #25D366;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 40px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primario:hover {
+    background: #1da15a;
+    transform: translateY(-2px);
+  }
+
+  /* Ideas */
   .ideas-section {
-    margin: 2rem 0 2rem;
+    margin-top: 2rem;
   }
 
   .ideas-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
     margin-top: 1rem;
   }
 
   .idea-card {
     background: white;
-    border-radius: 32px;
+    border-radius: 28px;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
     transition: all 0.2s;
-    border: 1px solid #ffe0b5;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+
+  .idea-card.seleccionada {
+    border-color: #f68b1f;
+    background: #fff7e8;
+    transform: scale(1.02);
+    box-shadow: 0 12px 24px rgba(246,139,31,0.2);
   }
 
   .idea-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
   }
 
   .idea-card img {
     width: 100%;
-    height: 160px;
+    height: 130px;
     object-fit: cover;
   }
 
   .idea-info {
-    padding: 1rem;
+    padding: 0.8rem;
+    text-align: center;
   }
 
   .idea-info h4 {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: #c2571a;
-    margin-bottom: 0.3rem;
   }
 
   .idea-info p {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #6b4c2c;
-    margin-bottom: 0.8rem;
+    margin: 5px 0;
   }
 
   .btn-idea {
     background: #ffc857;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 40px;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
     font-weight: 600;
-    color: #5a3a1a;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: 0.2s;
+    margin-top: 6px;
     width: 100%;
   }
-
   .btn-idea:hover {
     background: #ffb347;
-    transform: scale(1.02);
   }
 
-  /* Footer */
+  /* Carrito */
+  .carrito h3 {
+    font-size: 1.5rem;
+    color: #d45c2c;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lista-ensaladas {
+    max-height: 450px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+  }
+
+  .item-carrito {
+    background: #fffaf3;
+    border-radius: 20px;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+    border-left: 5px solid #ffb347;
+    cursor: pointer;
+    transition: 0.1s;
+  }
+  .item-carrito:hover {
+    background: #fff2e0;
+  }
+
+  .item-carrito .nombre-item {
+    font-weight: 800;
+    color: #aa5e1b;
+  }
+
+  .item-carrito .detalle {
+    font-size: 0.75rem;
+    color: #7a5a3a;
+    margin: 6px 0;
+  }
+
+  .item-carrito .precio-item {
+    font-weight: 700;
+    color: #25D366;
+  }
+
+  .btn-eliminar {
+    background: none;
+    border: none;
+    color: #d9534f;
+    cursor: pointer;
+    font-size: 0.8rem;
+    float: right;
+    font-weight: bold;
+  }
+  .btn-eliminar:hover {
+    transform: scale(1.1);
+  }
+
+  .total-carrito {
+    border-top: 2px dashed #ffcf8a;
+    padding-top: 1rem;
+    text-align: right;
+    font-weight: 800;
+    font-size: 1.3rem;
+  }
+
+  .btn-enviar {
+    width: 100%;
+    background: #25D366;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
+  .indicador-edicion {
+    background: #fdebb3;
+    border-radius: 40px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
   .footer {
     text-align: center;
     padding: 2rem 0.5rem;
     border-top: 3px dotted #ffcf8a;
-    margin-top: 1rem;
+    margin-top: 2rem;
     color: #9b6e3e;
-    font-weight: 500;
   }
 
   @media (max-width: 780px) {
-    .hero h1 { font-size: 2.2rem; }
-    .logo { max-width: 220px; }
-    .section-title { font-size: 1.8rem; }
-    .grupo h3 { font-size: 1.2rem; }
-    .btn-primary { padding: 0.7rem 1.4rem; font-size: 1rem; }
-    #total { font-size: 2rem; }
-  }
-
-  @media (max-width: 480px) {
-    .hero { padding-bottom: 3rem; }
-    .logo { max-width: 170px; }
-    .pedido-box { padding: 1.2rem; }
+    .hero h1 { font-size: 2rem; }
+    .section-title { font-size: 1.5rem; }
+    .main-layout { flex-direction: column; }
+    .carrito { position: static; }
   }
 </style>
 </head>
@@ -320,230 +398,419 @@
 </section>
 
 <div class="container">
-  <!-- FORMULARIO PRINCIPAL: ARMA TU ENSALADA -->
-  <div class="pedido-box">
-    <h2 class="section-title">🛒 Arma tu ensalada</h2>
-    <div class="pedido-grid">
-      <div class="grupo">
-        <h3>🥬 Base (sin costo)</h3>
-        <label><input type="radio" name="base" value="Lechuga" checked> Lechuga fresca</label>
-        <label><input type="radio" name="base" value="Pasta"> Pasta fría</label>
+  <div class="main-layout">
+    <!-- COLUMNA IZQUIERDA: CONFIGURADOR + IDEAS -->
+    <div class="configurador">
+      <div class="pedido-box" id="formularioEns">
+        <h2 class="section-title">🛒 Arma tu ensalada</h2>
+        <div id="editModeIndicator" class="indicador-edicion" style="display: none;">✏️ Editando ensalada</div>
+        <div class="pedido-grid">
+          <!-- Base: ahora con checkboxes (pueden ser ambas) -->
+          <div class="grupo">
+            <h3>🥬 Base (elige una o ambas)</h3>
+            <label><input type="checkbox" class="base-opcion" value="Lechuga"> Lechuga fresca</label>
+            <label><input type="checkbox" class="base-opcion" value="Pasta"> Pasta fría</label>
+          </div>
+          <!-- Proteínas -->
+          <div class="grupo">
+            <h3>🍗 Proteínas (1ra gratis, extra +$15)</h3>
+            <label><input type="checkbox" class="proteina" value="Pollo"> Pollo a la plancha</label>
+            <label><input type="checkbox" class="proteina" value="Atún"> Atún en agua</label>
+            <label><input type="checkbox" class="proteina" value="Queso panela"> Queso panela</label>
+            <label><input type="checkbox" class="proteina" value="Jamón de pavo"> Jamón de pavo</label>
+          </div>
+          <!-- Verduras -->
+          <div class="grupo">
+            <h3>🥒 Verduras (2 gratis, extra +$10)</h3>
+            <label><input type="checkbox" class="verdura" value="Pepino"> Pepino</label>
+            <label><input type="checkbox" class="verdura" value="Zanahoria"> Zanahoria rallada</label>
+            <label><input type="checkbox" class="verdura" value="Jícama"> Jícama crujiente</label>
+          </div>
+          <!-- Frutas -->
+          <div class="grupo">
+            <h3>🍓 Frutas (2 gratis, extra +$10)</h3>
+            <label><input type="checkbox" class="fruta" value="Mango"> Mango</label>
+            <label><input type="checkbox" class="fruta" value="Fresa"> Fresa</label>
+            <label><input type="checkbox" class="fruta" value="Manzana verde"> Manzana verde</label>
+            <label><input type="checkbox" class="fruta" value="Uvas"> Uvas</label>
+          </div>
+          <!-- Complementos -->
+          <div class="grupo">
+            <h3>✨ Complementos (sin costo)</h3>
+            <label><input type="checkbox" class="extra" value="Nuez"> Nuez / Almendra</label>
+            <label><input type="checkbox" class="extra" value="Arándanos"> Arándanos</label>
+            <label><input type="checkbox" class="extra" value="Parmesano"> Queso parmesano</label>
+            <label><input type="checkbox" class="extra" value="Miel"> Miel de agave</label>
+            <label><input type="checkbox" class="extra" value="Aceite"> Aceite de oliva</label>
+          </div>
+          <!-- Aderezo -->
+          <div class="grupo">
+            <h3>🥄 Aderezo (sin costo)</h3>
+            <label><input type="radio" name="aderezo" value="Mil Islas" checked> Mil Islas</label>
+            <label><input type="radio" name="aderezo" value="Blue Cheese"> Blue Cheese</label>
+            <label><input type="radio" name="aderezo" value="Ranch"> Ranch</label>
+            <label><input type="radio" name="aderezo" value="Mostaza Miel"> Mostaza Miel</label>
+          </div>
+        </div>
+        <div class="acciones-formulario">
+          <button class="btn-secundario" id="resetFormBtn">🔄 Limpiar</button>
+          <button class="btn-primario" id="addToCartBtn">➕ Agregar al carrito</button>
+          <button class="btn-secundario" id="cancelEditBtn" style="display: none;">✖ Cancelar edición</button>
+        </div>
       </div>
-      <div class="grupo">
-        <h3>🍗 Proteínas (1ra gratis, extra +$15)</h3>
-        <label><input type="checkbox" class="proteina" value="Pollo"> Pollo a la plancha</label>
-        <label><input type="checkbox" class="proteina" value="Atún"> Atún en agua</label>
-        <label><input type="checkbox" class="proteina" value="Queso panela"> Queso panela</label>
-        <label><input type="checkbox" class="proteina" value="Jamón de pavo"> Jamón de pavo</label>
-      </div>
-      <div class="grupo">
-        <h3>🥒 Verduras (2 gratis, extra +$10)</h3>
-        <label><input type="checkbox" class="verdura" value="Pepino"> Pepino</label>
-        <label><input type="checkbox" class="verdura" value="Zanahoria"> Zanahoria rallada</label>
-        <label><input type="checkbox" class="verdura" value="Jícama"> Jícama crujiente</label>
-      </div>
-      <div class="grupo">
-        <h3>🍓 Frutas (2 gratis, extra +$10)</h3>
-        <label><input type="checkbox" class="fruta" value="Mango"> Mango</label>
-        <label><input type="checkbox" class="fruta" value="Fresa"> Fresa</label>
-        <label><input type="checkbox" class="fruta" value="Manzana verde"> Manzana verde</label>
-        <label><input type="checkbox" class="fruta" value="Uvas"> Uvas</label>
-      </div>
-      <div class="grupo">
-        <h3>✨ Complementos (sin costo)</h3>
-        <label><input type="checkbox" class="extra" value="Nuez"> Nuez / Almendra</label>
-        <label><input type="checkbox" class="extra" value="Arándanos"> Arándanos deshidratados</label>
-        <label><input type="checkbox" class="extra" value="Parmesano"> Queso parmesano</label>
-        <label><input type="checkbox" class="extra" value="Miel"> Miel de agave</label>
-        <label><input type="checkbox" class="extra" value="Aceituna"> Aceite de oliva</label>
-      </div>
-      <div class="grupo">
-        <h3>🥄 Aderezo (sin costo)</h3>
-        <label><input type="radio" name="aderezo" value="Mil Islas" checked> Mil Islas</label>
-        <label><input type="radio" name="aderezo" value="Blue Cheese"> Blue Cheese</label>
-        <label><input type="radio" name="aderezo" value="Ranch"> Ranch</label>
-        <label><input type="radio" name="aderezo" value="Mostaza Miel"> Mostaza Miel</label>
+
+      <!-- SECCIÓN IDEAS DE ENSALADA -->
+      <div class="ideas-section">
+        <h2 class="section-title">⭐ Ideas de ensalada</h2>
+        <div class="ideas-grid" id="ideasGrid">
+          <div class="idea-card" data-idea="pollo_tropical">
+            <img src="en1.png" alt="Pollo Tropical" onerror="this.src='https://placehold.co/400x300?text=Pollo'">
+            <div class="idea-info">
+              <h4>🥭 Pollo Tropical</h4>
+              <p>Pollo, mango, uvas, pepino, mostaza miel</p>
+              <button class="btn-idea">Seleccionar</button>
+            </div>
+          </div>
+          <div class="idea-card" data-idea="fresa_frutal">
+            <img src="en2.png" alt="Fresa & Frutal" onerror="this.src='https://placehold.co/400x300?text=Fresa'">
+            <div class="idea-info">
+              <h4>🍓 Fresa & Frutal</h4>
+              <p>Queso panela, fresa, manzana, arándanos</p>
+              <button class="btn-idea">Seleccionar</button>
+            </div>
+          </div>
+          <div class="idea-card" data-idea="atun_clasica">
+            <img src="en3.png" alt="Atún Clásica" onerror="this.src='https://placehold.co/400x300?text=Atun'">
+            <div class="idea-info">
+              <h4>🐟 Atún Clásica</h4>
+              <p>Atún, pepino, jícama, ranch</p>
+              <button class="btn-idea">Seleccionar</button>
+            </div>
+          </div>
+          <div class="idea-card" data-idea="campestre">
+            <img src="en4.png" alt="Campestre" onerror="this.src='https://placehold.co/400x300?text=Campestre'">
+            <div class="idea-info">
+              <h4>🌿 Campestre</h4>
+              <p>Jamón, manzana, uvas, blue cheese</p>
+              <button class="btn-idea">Seleccionar</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="resumen">
-      <h3>💰 Total: <span id="total">35</span> MXN</h3>
-      <button onclick="enviarPedido()" class="btn-primary">
+
+    <!-- COLUMNA DERECHA: CARRITO -->
+    <div class="carrito">
+      <h3>🛍️ Tu pedido</h3>
+      <div id="listaCarrito" class="lista-ensaladas">
+        <p style="color:#aaa; text-align:center;">Aún no hay ensaladas</p>
+      </div>
+      <div class="total-carrito">
+        Total: $<span id="totalCarrito">0</span> MXN
+      </div>
+      <button id="enviarPedidoBtn" class="btn-primario btn-enviar">
         📱 Enviar pedido por WhatsApp
       </button>
-    </div>
-  </div>
-
-  <!-- SECCIÓN: IDEAS DE ENSALADA (para precargar ingredientes) -->
-  <div class="ideas-section">
-    <h2 class="section-title">⭐ Ideas de ensalada</h2>
-    <div class="ideas-grid">
-      <div class="idea-card">
-        <img src="en1.png" alt="Pollo Tropical" onerror="this.src='https://placehold.co/400x300?text=Pollo+Tropical'">
-        <div class="idea-info">
-          <h4>🥭 Pollo Tropical</h4>
-          <p>Pollo, mango, uvas, pepino y mostaza miel.</p>
-          <button class="btn-idea" onclick="cargarIdea('pollo_tropical')">Seleccionar esta idea</button>
-        </div>
-      </div>
-      <div class="idea-card">
-        <img src="en2.png" alt="Fresa & Frutal" onerror="this.src='https://placehold.co/400x300?text=Fresa+Frutal'">
-        <div class="idea-info">
-          <h4>🍓 Fresa & Frutal</h4>
-          <p>Queso panela, fresa, manzana y arándanos.</p>
-          <button class="btn-idea" onclick="cargarIdea('fresa_frutal')">Seleccionar esta idea</button>
-        </div>
-      </div>
-      <div class="idea-card">
-        <img src="en3.png" alt="Atún Clásica" onerror="this.src='https://placehold.co/400x300?text=Atun+Clasica'">
-        <div class="idea-info">
-          <h4>🐟 Atún Clásica</h4>
-          <p>Atún, pepino, jícama y aderezo ranch.</p>
-          <button class="btn-idea" onclick="cargarIdea('atun_clasica')">Seleccionar esta idea</button>
-        </div>
-      </div>
-      <div class="idea-card">
-        <img src="en4.png" alt="Campestre" onerror="this.src='https://placehold.co/400x300?text=Campestre'">
-        <div class="idea-info">
-          <h4>🌿 Campestre</h4>
-          <p>Jamón de pavo, manzana, uvas y blue cheese.</p>
-          <button class="btn-idea" onclick="cargarIdea('campestre')">Seleccionar esta idea</button>
-        </div>
-      </div>
     </div>
   </div>
 </div>
 
 <footer class="footer">
   <p>🥗 Ensalada Exprés — Ingredientes frescos, preparación rápida. CDMX y área metropolitana.</p>
-  <p style="margin-top: 12px;">© 2025 • ¡Come rico y sano!</p>
+  <p>© 2025 • ¡Come rico y sano!</p>
 </footer>
 
 <script>
-  // PRECIOS
-  const PRECIO_BASE = 35;
-
-  function calcularTotal() {
-    let total = PRECIO_BASE;
+  // ------------------------- LÓGICA DE PRECIOS (con base múltiple) -------------------------
+  function calcularPrecioDesdeFormulario() {
+    let total = 35; // precio base
+    // Proteínas: primera gratis, extra +15
     const proteinas = document.querySelectorAll('.proteina:checked').length;
     if (proteinas > 1) total += (proteinas - 1) * 15;
+    // Verduras: primeras 2 gratis, extra +10
     const verduras = document.querySelectorAll('.verdura:checked').length;
     if (verduras > 2) total += (verduras - 2) * 10;
+    // Frutas: primeras 2 gratis, extra +10
     const frutas = document.querySelectorAll('.fruta:checked').length;
     if (frutas > 2) total += (frutas - 2) * 10;
-    // complementos gratis
-    document.getElementById('total').textContent = total;
+    // Complementos y aderezo gratis
+    return total;
   }
 
-  // Escuchar cambios en todos los inputs
-  document.querySelectorAll('input').forEach(input => {
-    input.addEventListener('change', calcularTotal);
-  });
-
-  function obtenerValores(clase) {
-    const checks = document.querySelectorAll('.' + clase + ':checked');
-    if (checks.length === 0) return 'Ninguno';
-    return Array.from(checks).map(c => c.value).join(', ');
-  }
-
-  function enviarPedido() {
-    const base = document.querySelector('input[name="base"]:checked').value;
+  // Obtener objeto completo de la ensalada actual (incluye bases múltiples)
+  function getCurrentEnsalada() {
+    const bases = Array.from(document.querySelectorAll('.base-opcion:checked')).map(cb => cb.value);
+    const baseStr = bases.length ? bases.join(' + ') : 'Ninguna base (selecciona al menos una)';
     const aderezo = document.querySelector('input[name="aderezo"]:checked').value;
-    const proteinas = obtenerValores('proteina');
-    const verduras = obtenerValores('verdura');
-    const frutas = obtenerValores('fruta');
-    const extras = obtenerValores('extra');
-    const total = document.getElementById('total').textContent;
-
-    const mensaje = `Hola 👋
-
-Quiero pedir una ensalada 🥗
-
-🥬 Base:
-${base}
-
-🍗 Proteínas:
-${proteinas}
-
-🥒 Verduras:
-${verduras}
-
-🍓 Frutas:
-${frutas}
-
-✨ Complementos:
-${extras}
-
-🥄 Aderezo:
-${aderezo}
-
-💰 Total:
-$${total} MXN`;
-
-    window.open(`https://wa.me/525632625090?text=${encodeURIComponent(mensaje)}`, '_blank');
+    const proteinas = Array.from(document.querySelectorAll('.proteina:checked')).map(cb => cb.value);
+    const verduras = Array.from(document.querySelectorAll('.verdura:checked')).map(cb => cb.value);
+    const frutas = Array.from(document.querySelectorAll('.fruta:checked')).map(cb => cb.value);
+    const extras = Array.from(document.querySelectorAll('.extra:checked')).map(cb => cb.value);
+    const precio = calcularPrecioDesdeFormulario();
+    return { bases, baseStr, aderezo, proteinas, verduras, frutas, extras, precio };
   }
 
-  // ----- FUNCIONES PARA CARGAR IDEAS -----
-  function limpiarCheckboxes(clase) {
-    document.querySelectorAll('.' + clase).forEach(cb => cb.checked = false);
-  }
-
-  function setCheckboxes(clase, valores) {
-    const checkboxes = document.querySelectorAll('.' + clase);
-    checkboxes.forEach(cb => {
-      if (valores.includes(cb.value)) {
-        cb.checked = true;
-      } else {
-        cb.checked = false;
-      }
+  // Cargar una ensalada en el formulario (para editar)
+  function cargarEnsaladaEnFormulario(ensalada) {
+    // Bases: checkboxes
+    document.querySelectorAll('.base-opcion').forEach(cb => {
+      cb.checked = ensalada.bases.includes(cb.value);
+    });
+    // Aderezo
+    document.querySelectorAll('input[name="aderezo"]').forEach(radio => {
+      radio.checked = (radio.value === ensalada.aderezo);
+    });
+    // Proteínas
+    document.querySelectorAll('.proteina').forEach(cb => {
+      cb.checked = ensalada.proteinas.includes(cb.value);
+    });
+    // Verduras
+    document.querySelectorAll('.verdura').forEach(cb => {
+      cb.checked = ensalada.verduras.includes(cb.value);
+    });
+    // Frutas
+    document.querySelectorAll('.fruta').forEach(cb => {
+      cb.checked = ensalada.frutas.includes(cb.value);
+    });
+    // Extras
+    document.querySelectorAll('.extra').forEach(cb => {
+      cb.checked = ensalada.extras.includes(cb.value);
     });
   }
 
+  // ------------------------- CARRITO Y EDICIÓN -------------------------
+  let carrito = []; // cada elemento: { ensalada }
+  let editandoIndex = null; // índice de la ensalada que se está editando, null si no
+
+  function actualizarCarritoUI() {
+    const contenedor = document.getElementById('listaCarrito');
+    const totalSpan = document.getElementById('totalCarrito');
+    if (!contenedor) return;
+
+    if (carrito.length === 0) {
+      contenedor.innerHTML = '<p style="color:#aaa; text-align:center;">Aún no hay ensaladas</p>';
+      totalSpan.textContent = '0';
+      return;
+    }
+
+    let html = '';
+    let totalGeneral = 0;
+    carrito.forEach((item, idx) => {
+      const e = item.ensalada;
+      totalGeneral += e.precio;
+      html += `
+        <div class="item-carrito" data-index="${idx}">
+          <button class="btn-eliminar" data-index="${idx}">✖</button>
+          <div class="nombre-item">🥗 Ensalada ${idx+1}</div>
+          <div class="detalle">🥬 Base: ${e.baseStr}</div>
+          <div class="detalle">🥄 Aderezo: ${e.aderezo}</div>
+          <div class="detalle">🍗 ${e.proteinas.join(', ') || 'Ninguna'}</div>
+          <div class="detalle">🥒 ${e.verduras.join(', ') || 'Ninguna'}</div>
+          <div class="detalle">🍓 ${e.frutas.join(', ') || 'Ninguna'}</div>
+          <div class="detalle">✨ ${e.extras.join(', ') || 'Ninguno'}</div>
+          <div class="precio-item">$${e.precio} MXN</div>
+        </div>
+      `;
+    });
+    contenedor.innerHTML = html;
+    totalSpan.textContent = totalGeneral;
+
+    // Eventos para eliminar (evitamos que el clic en eliminar active la edición)
+    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.dataset.index);
+        carrito.splice(idx, 1);
+        if (editandoIndex === idx) cancelarEdicion();
+        else if (editandoIndex !== null && editandoIndex > idx) editandoIndex--;
+        actualizarCarritoUI();
+      });
+    });
+
+    // Evento para editar: al hacer clic en el item (excepto el botón eliminar)
+    document.querySelectorAll('.item-carrito').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('btn-eliminar')) return;
+        const idx = parseInt(item.dataset.index);
+        iniciarEdicion(idx);
+      });
+    });
+  }
+
+  function iniciarEdicion(index) {
+    if (index < 0 || index >= carrito.length) return;
+    editandoIndex = index;
+    const ensaladaEdit = carrito[index].ensalada;
+    cargarEnsaladaEnFormulario(ensaladaEdit);
+    // Cambiar botones
+    document.getElementById('addToCartBtn').style.display = 'none';
+    document.getElementById('cancelEditBtn').style.display = 'inline-flex';
+    document.getElementById('editModeIndicator').style.display = 'inline-block';
+    // Cambiar texto del botón de agregar? Ya oculto, mostramos el de actualizar
+    const updateBtn = document.getElementById('updateCartBtn');
+    if (!updateBtn) {
+      const newBtn = document.createElement('button');
+      newBtn.id = 'updateCartBtn';
+      newBtn.className = 'btn-primario';
+      newBtn.innerHTML = '🔄 Actualizar ensalada';
+      newBtn.onclick = actualizarEnsaladaEditada;
+      const accionesDiv = document.querySelector('.acciones-formulario');
+      accionesDiv.insertBefore(newBtn, document.getElementById('cancelEditBtn'));
+    } else {
+      updateBtn.style.display = 'inline-flex';
+    }
+  }
+
+  function actualizarEnsaladaEditada() {
+    if (editandoIndex === null) return;
+    const nuevaEnsalada = getCurrentEnsalada();
+    carrito[editandoIndex].ensalada = nuevaEnsalada;
+    cancelarEdicion();
+    actualizarCarritoUI();
+  }
+
+  function cancelarEdicion() {
+    editandoIndex = null;
+    document.getElementById('addToCartBtn').style.display = 'inline-flex';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+    document.getElementById('editModeIndicator').style.display = 'none';
+    const updateBtn = document.getElementById('updateCartBtn');
+    if (updateBtn) updateBtn.style.display = 'none';
+    resetFormulario();
+  }
+
+  function agregarAlCarrito() {
+    const nueva = getCurrentEnsalada();
+    if (nueva.bases.length === 0) {
+      alert("Por favor selecciona al menos una base (Lechuga o Pasta).");
+      return;
+    }
+    carrito.push({ ensalada: nueva });
+    actualizarCarritoUI();
+    resetFormulario();
+  }
+
+  function resetFormulario() {
+    // Desmarcar todas las bases
+    document.querySelectorAll('.base-opcion').forEach(cb => cb.checked = false);
+    // Por defecto marcamos lechuga? Para mejor UX, marcamos lechuga por defecto.
+    // pero el usuario puede desmarcar. Mejor dejar sin selección para que elija.
+    // Opcional: marcar lechuga por defecto.
+    document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
+    // Desmarcar proteínas, verduras, frutas, extras
+    document.querySelectorAll('.proteina, .verdura, .fruta, .extra').forEach(cb => cb.checked = false);
+    // Aderezo por defecto Mil Islas
+    document.querySelector('input[name="aderezo"][value="Mil Islas"]').checked = true;
+    // Quitar selección visual de ideas
+    document.querySelectorAll('.idea-card').forEach(card => card.classList.remove('seleccionada'));
+    // Si estamos en modo edición, salir
+    if (editandoIndex !== null) cancelarEdicion();
+  }
+
+  // ------------------------- IDEAS DE ENSALADA (con selección visual y carga) -------------------------
+  function cargarIdea(ideaId) {
+    resetFormulario(); // limpia todo y deja lechuga marcada como base por defecto (por resetFormulario)
+    // Ajustamos según la idea
+    if (ideaId === 'pollo_tropical') {
+      document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
+      document.querySelector('.base-opcion[value="Pasta"]').checked = false;
+      setCheckboxes('.proteina', ['Pollo']);
+      setCheckboxes('.verdura', ['Pepino']);
+      setCheckboxes('.fruta', ['Mango', 'Uvas']);
+      setRadio('aderezo', 'Mostaza Miel');
+    }
+    else if (ideaId === 'fresa_frutal') {
+      document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
+      setCheckboxes('.proteina', ['Queso panela']);
+      setCheckboxes('.fruta', ['Fresa', 'Manzana verde']);
+      setCheckboxes('.extra', ['Arándanos']);
+      setRadio('aderezo', 'Ranch');
+    }
+    else if (ideaId === 'atun_clasica') {
+      document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
+      setCheckboxes('.proteina', ['Atún']);
+      setCheckboxes('.verdura', ['Pepino', 'Jícama']);
+      setRadio('aderezo', 'Ranch');
+    }
+    else if (ideaId === 'campestre') {
+      document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
+      setCheckboxes('.proteina', ['Jamón de pavo']);
+      setCheckboxes('.fruta', ['Manzana verde', 'Uvas']);
+      setCheckboxes('.extra', ['Nuez']);
+      setRadio('aderezo', 'Blue Cheese');
+    }
+  }
+
+  function setCheckboxes(selector, valores) {
+    document.querySelectorAll(selector).forEach(cb => {
+      cb.checked = valores.includes(cb.value);
+    });
+  }
   function setRadio(name, valor) {
-    const radios = document.querySelectorAll(`input[name="${name}"]`);
-    radios.forEach(radio => {
+    document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
       if (radio.value === valor) radio.checked = true;
     });
   }
 
-  function cargarIdea(idea) {
-    // Resetear todo (excepto base, dejamos lechuga por defecto)
-    limpiarCheckboxes('proteina');
-    limpiarCheckboxes('verdura');
-    limpiarCheckboxes('fruta');
-    limpiarCheckboxes('extra');
-    setRadio('base', 'Lechuga');
-    setRadio('aderezo', 'Mil Islas'); // por defecto
-
-    if (idea === 'pollo_tropical') {
-      setCheckboxes('proteina', ['Pollo']);
-      setCheckboxes('verdura', ['Pepino']);
-      setCheckboxes('fruta', ['Mango', 'Uvas']);
-      setRadio('aderezo', 'Mostaza Miel');
-    }
-    else if (idea === 'fresa_frutal') {
-      setCheckboxes('proteina', ['Queso panela']);
-      setCheckboxes('fruta', ['Fresa', 'Manzana verde']);
-      setCheckboxes('extra', ['Arándanos']);
-      setRadio('aderezo', 'Ranch');
-    }
-    else if (idea === 'atun_clasica') {
-      setCheckboxes('proteina', ['Atún']);
-      setCheckboxes('verdura', ['Pepino', 'Jícama']);
-      setRadio('aderezo', 'Ranch');
-    }
-    else if (idea === 'campestre') {
-      setCheckboxes('proteina', ['Jamón de pavo']);
-      setCheckboxes('fruta', ['Manzana verde', 'Uvas']);
-      setCheckboxes('extra', ['Nuez']);
-      setRadio('aderezo', 'Blue Cheese');
-    }
-
-    // Disparar cálculo del total
-    calcularTotal();
+  function initIdeas() {
+    const ideasCards = document.querySelectorAll('.idea-card');
+    ideasCards.forEach(card => {
+      const btn = card.querySelector('.btn-idea');
+      const ideaId = card.dataset.idea;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        ideasCards.forEach(c => c.classList.remove('seleccionada'));
+        card.classList.add('seleccionada');
+        cargarIdea(ideaId);
+      });
+      card.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'BUTTON') {
+          ideasCards.forEach(c => c.classList.remove('seleccionada'));
+          card.classList.add('seleccionada');
+          cargarIdea(ideaId);
+        }
+      });
+    });
   }
 
-  // Inicializar total al cargar
-  calcularTotal();
+  // Enviar pedido completo
+  function enviarPedidoCompleto() {
+    if (carrito.length === 0) {
+      alert("Agrega al menos una ensalada antes de enviar el pedido.");
+      return;
+    }
+    let mensaje = "Hola 👋, quiero hacer el siguiente pedido:\n\n";
+    let numero = 1;
+    let totalGlobal = 0;
+    for (let item of carrito) {
+      const e = item.ensalada;
+      totalGlobal += e.precio;
+      mensaje += `🥗 Ensalada ${numero}:\n`;
+      mensaje += `🥬 Base: ${e.baseStr}\n`;
+      mensaje += `🍗 Proteínas: ${e.proteinas.join(', ') || 'Ninguna'}\n`;
+      mensaje += `🥒 Verduras: ${e.verduras.join(', ') || 'Ninguna'}\n`;
+      mensaje += `🍓 Frutas: ${e.frutas.join(', ') || 'Ninguna'}\n`;
+      mensaje += `✨ Complementos: ${e.extras.join(', ') || 'Ninguno'}\n`;
+      mensaje += `🥄 Aderezo: ${e.aderezo}\n`;
+      mensaje += `💰 Precio: $${e.precio} MXN\n\n`;
+      numero++;
+    }
+    mensaje += `\n🔥 TOTAL DEL PEDIDO: $${totalGlobal} MXN\n`;
+    mensaje += `📍 Dirección de envío: (escribe aquí)\n`;
+    mensaje += `⏰ Horario preferido: (opcional)`;
+    window.open(`https://wa.me/525632625090?text=${encodeURIComponent(mensaje)}`, '_blank');
+  }
+
+  // Event listeners
+  document.getElementById('addToCartBtn').addEventListener('click', agregarAlCarrito);
+  document.getElementById('resetFormBtn').addEventListener('click', resetFormulario);
+  document.getElementById('cancelEditBtn').addEventListener('click', cancelarEdicion);
+  document.getElementById('enviarPedidoBtn').addEventListener('click', enviarPedidoCompleto);
+  // Si existe updateCartBtn, lo manejamos dinámicamente
+
+  resetFormulario(); // para dejar lechuga marcada por defecto
+  initIdeas();
+  actualizarCarritoUI();
 </script>
 </body>
 </html>
