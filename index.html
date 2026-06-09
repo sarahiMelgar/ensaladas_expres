@@ -795,9 +795,8 @@
       mensaje += `💰 Precio: $${e.precio} MXN\n\n`;
       numero++;
     }
-    mensaje += `\n🔥 TOTAL DEL PEDIDO: $${totalGlobal} MXN\n`;
+    mensaje += `\n TOTAL DEL PEDIDO: $${totalGlobal} MXN\n`;
     mensaje += `📍 Dirección de envío: (escribe aquí)\n`;
-    mensaje += `⏰ Horario preferido: (opcional)`;
     window.open(`https://wa.me/525632625090?text=${encodeURIComponent(mensaje)}`, '_blank');
   }
 
