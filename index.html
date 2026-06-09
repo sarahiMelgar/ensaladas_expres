@@ -121,6 +121,8 @@
     font-size: 1.2rem;
     transition: all 0.25s ease;
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    border: none;
+    cursor: pointer;
   }
 
   .btn-primary:hover {
@@ -147,7 +149,7 @@
     letter-spacing: -0.5px;
   }
 
-  /* Tarjetas */
+  /* Tarjetas de ingredientes estáticas */
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -200,7 +202,61 @@
     border-bottom: 1px dashed #ffe0b5;
   }
 
-  /* Galería */
+  /* Nueva sección: Arma tu ensalada */
+  .pedido-box {
+    background: white;
+    padding: 30px;
+    border-radius: 30px;
+    margin: 40px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  }
+
+  .pedido-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .grupo {
+    background: #fffaf3;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .grupo h3 {
+    margin-bottom: 15px;
+    color: #d45c2c;
+    font-size: 1.3rem;
+  }
+
+  .grupo label {
+    display: block;
+    margin: 10px 0;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .grupo input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .resumen {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  #total {
+    font-size: 40px;
+    color: #25D366;
+    font-weight: bold;
+  }
+
+  /* Galería de ideas */
   .salad-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -453,6 +509,7 @@
 
 <div class="content-overlay">
   <div class="container">
+    <!-- Sección informativa de ingredientes -->
     <h2 class="section-title">🥗 CREA TU ENSALADA</h2>
     <div class="cards">
       <div class="card">
@@ -481,10 +538,63 @@
       </div>
     </div>
 
+    <!-- NUEVA SECCIÓN: ARMA TU ENSALADA (INTERACTIVA) -->
+    <section class="pedido-box">
+      <h2 class="section-title">🛒 Arma tu ensalada</h2>
+      <div class="pedido-grid">
+        <div class="grupo">
+          <h3>🥬 Base (sin costo)</h3>
+          <label><input type="radio" name="base" value="Lechuga" checked> Lechuga</label>
+          <label><input type="radio" name="base" value="Pasta"> Pasta</label>
+        </div>
+        <div class="grupo">
+          <h3>🍗 Proteínas (1ra incluida, extras +$15)</h3>
+          <label><input type="checkbox" class="proteina" value="Pollo"> Pollo</label>
+          <label><input type="checkbox" class="proteina" value="Atún"> Atún</label>
+          <label><input type="checkbox" class="proteina" value="Queso panela"> Queso panela</label>
+          <label><input type="checkbox" class="proteina" value="Jamón de pavo"> Jamón de pavo</label>
+        </div>
+        <div class="grupo">
+          <h3>🥒 Verduras (2 gratis, extra +$10)</h3>
+          <label><input type="checkbox" class="verdura" value="Pepino"> Pepino</label>
+          <label><input type="checkbox" class="verdura" value="Zanahoria"> Zanahoria</label>
+          <label><input type="checkbox" class="verdura" value="Jícama"> Jícama</label>
+        </div>
+        <div class="grupo">
+          <h3>🍓 Frutas (2 gratis, extra +$10)</h3>
+          <label><input type="checkbox" class="fruta" value="Mango"> Mango</label>
+          <label><input type="checkbox" class="fruta" value="Fresa"> Fresa</label>
+          <label><input type="checkbox" class="fruta" value="Manzana verde"> Manzana verde</label>
+          <label><input type="checkbox" class="fruta" value="Uvas"> Uvas</label>
+        </div>
+        <div class="grupo">
+          <h3>✨ Complementos (sin costo extra)</h3>
+          <label><input type="checkbox" class="extra" value="Nuez"> Nuez</label>
+          <label><input type="checkbox" class="extra" value="Almendra"> Almendra</label>
+          <label><input type="checkbox" class="extra" value="Arándanos"> Arándanos</label>
+          <label><input type="checkbox" class="extra" value="Parmesano"> Queso parmesano</label>
+        </div>
+        <div class="grupo">
+          <h3>🥄 Aderezo (sin costo)</h3>
+          <label><input type="radio" name="aderezo" value="Mil Islas" checked> Mil Islas</label>
+          <label><input type="radio" name="aderezo" value="Blue Cheese"> Blue Cheese</label>
+          <label><input type="radio" name="aderezo" value="Ranch"> Ranch</label>
+          <label><input type="radio" name="aderezo" value="Mostaza Miel"> Mostaza Miel</label>
+        </div>
+      </div>
+      <div class="resumen">
+        <h3>💰 Total: $<span id="total">35</span> MXN</h3>
+        <button onclick="enviarPedido()" class="btn-primary">
+          📱 Enviar pedido por WhatsApp
+        </button>
+      </div>
+    </section>
+
+    <!-- Ideas de ensaladas -->
     <h2 class="section-title">⭐ IDEAS DE ENSALADAS</h2>
     <div class="salad-grid">
       <div class="salad">
-        <img src="en1.png" alt="Pollo Tropical" onerror="this.src='https://placehold.co/600x400?text=en1'">
+        <img src="en1.jpg" alt="Pollo Tropical" onerror="this.src='https://placehold.co/600x400?text=en1'">
         <div class="salad-content"><h4>🥭 Pollo Tropical</h4><p>Pollo jugoso, mango, uvas, pepino y mostaza miel.</p></div>
       </div>
       <div class="salad">
@@ -501,13 +611,14 @@
       </div>
     </div>
 
+    <!-- Precios informativos -->
     <div class="prices">
       <div class="price"><h3>🥗 Ensalada Completa</h3><span>35</span></div>
       <div class="price"><h3>➕ Extra Ingrediente</h3><span>10</span></div>
       <div class="price"><h3>🍗 Extra Proteína</h3><span>15</span></div>
     </div>
 
-    <h2 class="section-title">¿Cómo pedir?</h2>
+    <h2 class="section-title">✨ ¿Cómo pedir?</h2>
     <div class="steps">
       <div class="step-item"><div class="step-num">1</div><p>Elige tus ingredientes</p></div>
       <div class="step-item"><div class="step-num">2</div><p>Envía tu combo por WhatsApp</p></div>
@@ -527,9 +638,91 @@
 <a class="whatsapp-float" href="https://wa.me/525632625090?text=Hola%2C%20me%20encantaría%20saber%20más%20de%20las%20ensaladas%20🥗" aria-label="WhatsApp">💬</a>
 
 <footer class="footer">
-  <p>Ensalada Exprés — Hecho con ingredientes frescos, pasión y rapidez.</p>
+  <p>🥗 Ensalada Exprés — Hecho con ingredientes frescos, pasión y rapidez. CDMX y área metropolitana.</p>
   <p style="margin-top: 12px;">© 2025 • ¡Come rico y sano!</p>
 </footer>
+
+<script>
+  const PRECIO_BASE = 35;
+
+  function calcularTotal() {
+    let total = PRECIO_BASE;
+
+    // Proteínas: la primera gratis, extra $15 c/u
+    const proteinasSeleccionadas = document.querySelectorAll('.proteina:checked').length;
+    if (proteinasSeleccionadas > 1) {
+      total += (proteinasSeleccionadas - 1) * 15;
+    }
+
+    // Verduras: primeras 2 gratis, extra $10 c/u
+    const verdurasSeleccionadas = document.querySelectorAll('.verdura:checked').length;
+    if (verdurasSeleccionadas > 2) {
+      total += (verdurasSeleccionadas - 2) * 10;
+    }
+
+    // Frutas: primeras 2 gratis, extra $10 c/u
+    const frutasSeleccionadas = document.querySelectorAll('.fruta:checked').length;
+    if (frutasSeleccionadas > 2) {
+      total += (frutasSeleccionadas - 2) * 10;
+    }
+
+    // Complementos: siempre gratis, no suman
+    // Aderezo: gratis
+
+    document.getElementById('total').textContent = total;
+  }
+
+  // Escuchar cambios en todos los inputs
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', calcularTotal);
+  });
+
+  function obtenerValores(clase) {
+    const checks = document.querySelectorAll('.' + clase + ':checked');
+    if (checks.length === 0) return 'Ninguno';
+    return Array.from(checks).map(c => c.value).join(', ');
+  }
+
+  function enviarPedido() {
+    const base = document.querySelector('input[name="base"]:checked').value;
+    const aderezo = document.querySelector('input[name="aderezo"]:checked').value;
+    const proteinas = obtenerValores('proteina');
+    const verduras = obtenerValores('verdura');
+    const frutas = obtenerValores('fruta');
+    const extras = obtenerValores('extra');
+    const total = document.getElementById('total').textContent;
+
+    const mensaje = `Hola 👋
+
+Quiero pedir una ensalada 🥗
+
+🥬 Base:
+${base}
+
+🍗 Proteínas:
+${proteinas}
+
+🥒 Verduras:
+${verduras}
+
+🍓 Frutas:
+${frutas}
+
+✨ Complementos:
+${extras}
+
+🥄 Aderezo:
+${aderezo}
+
+💰 Total:
+$${total} MXN`;
+
+    window.open(`https://wa.me/525632625090?text=${encodeURIComponent(mensaje)}`, '_blank');
+  }
+
+  // Calcular al cargar la página
+  calcularTotal();
+</script>
 
 </body>
 </html>
