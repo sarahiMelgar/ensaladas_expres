@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ensalada Exprés | Fresca, Rápida y Saludable</title>
+<meta name="description" content="Crea tu propia ensalada fresca en minutos. Ingredientes de calidad, entrega rápida por WhatsApp. ¡Pide ya!">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: linear-gradient(145deg, #fff9ef 0%, #fef3e0 100%);
+    font-family: 'Inter', sans-serif;
+    color: #2c2b28;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  :root {
+    --verde-vivo: #3ba53b;
+    --verde-oscuro: #2a7a2a;
+    --naranja: #ff9f4a;
+    --amarillo-miel: #ffd966;
+    --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 20px 30px -8px rgba(0, 0, 0, 0.15);
+    --radius-card: 32px;
+  }
+
+  .container {
+    width: 92%;
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(125deg, #ffd89b 0%, #c7e9b0 100%);
+    padding: 2rem 1.5rem 8rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "🥗🥑🍅";
+    position: absolute;
+    font-size: 160px;
+    bottom: -40px;
+    left: -30px;
+    opacity: 0.15;
+    white-space: nowrap;
+    pointer-events: none;
+    transform: rotate(-10deg);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    background: linear-gradient(145deg, #fff9ef 0%, #fef3e0 100%);
+    border-radius: 70% 70% 0 0;
+    z-index: 1;
+  }
+
+  .logo {
+    max-width: 280px;
+    width: 90%;
+    height: auto;
+    margin-bottom: 0.8rem;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.15));
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s;
+  }
+  .logo:hover {
+    transform: scale(1.02);
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2c5e2a, #f2b441);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0.5rem 0 0.2rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #3b5c2a;
+    background: rgba(255,255,200,0.7);
+    display: inline-block;
+    padding: 0.3rem 1.2rem;
+    border-radius: 40px;
+    backdrop-filter: blur(4px);
+    margin-bottom: 1.8rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: white;
+    font-weight: 700;
+    padding: 1rem 2.2rem;
+    border-radius: 60px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: #1da15a;
+    box-shadow: 0 18px 28px -8px rgba(37, 211, 102, 0.5);
+  }
+
+  .content-overlay {
+    margin-top: -70px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: 800;
+    background: linear-gradient(120deg, #d45c2c, #f1b82e);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 2rem 0 2rem 0;
+    letter-spacing: -0.5px;
+  }
+
+  /* Tarjetas */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0 1rem;
+  }
+
+  .card {
+    background: white;
+    border-radius: var(--radius-card);
+    padding: 1.8rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+    border-left: 8px solid var(--verde-vivo);
+    background: linear-gradient(135deg, #ffffff, #fffaf2);
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-left-color: var(--naranja);
+  }
+
+  .card h3 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #c2571a;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card h3 span {
+    font-size: 2rem;
+  }
+
+  .card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .card li {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2f3e2e;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed #ffe0b5;
+  }
+
+  /* Galería */
+  .salad-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .salad {
+    background: white;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 1px solid #ffdfb0;
+  }
+
+  .salad:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+    border-color: #ffb347;
+  }
+
+  .salad img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    background: #f5e7d3;
+  }
+
+  .salad:hover img {
+    transform: scale(1.03);
+  }
+
+  .salad-content {
+    padding: 1.3rem 1.2rem 1.6rem;
+    background: #fffdf7;
+  }
+
+  .salad h4 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #d45c2c;
+    margin-bottom: 0.5rem;
+  }
+
+  .salad p {
+    color: #6b4c2c;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  /* Precios */
+  .prices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.8rem;
+    margin: 3rem 0;
+  }
+
+  .price {
+    background: linear-gradient(145deg, #fffbee, #fff4e0);
+    border-radius: 40px;
+    padding: 1.8rem 1rem;
+    text-align: center;
+    transition: all 0.25s;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    border: 2px solid #ffe3b5;
+  }
+
+  .price:hover {
+    background: linear-gradient(145deg, #ffc97a, #ffb347);
+    transform: translateY(-8px);
+    border-color: #ff9f2e;
+  }
+
+  .price h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: #aa5e1b;
+  }
+
+  .price span {
+    font-size: 2.2rem;
+    font-weight: 800;
+    display: inline-block;
+    color: #c94f0b;
+  }
+
+  .price:hover h3, .price:hover span {
+    color: white;
+  }
+
+  /* Pasos */
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0 1rem;
+  }
+
+  .step-item {
+    background: linear-gradient(145deg, #fff7e8, #fff0dc);
+    border-radius: 48px;
+    padding: 1.2rem 1.2rem;
+    flex: 1 1 180px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .step-item .step-num {
+    background: #ffc857;
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 60px;
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: #663f00;
+    margin-bottom: 0.8rem;
+    box-shadow: inset 0 -2px 0 #b97f2a, 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .step-item p {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #7a4a1a;
+  }
+
+  /* Contacto */
+  .contact {
+    background: linear-gradient(115deg, #ffefcf, #ffe2b5);
+    padding: 2.6rem 2rem;
+    border-radius: 56px;
+    text-align: center;
+    margin: 2rem 0 3rem;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    border: 1px solid #ffd8a5;
+  }
+
+  .contact h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #b6470b;
+    margin-bottom: 0.5rem;
+  }
+
+  .number {
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: monospace;
+    letter-spacing: 2px;
+    background: #fef2d6;
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    border-radius: 80px;
+    margin: 1rem 0;
+    color: #216b21;
+    border: 2px solid #ffb45e;
+  }
+
+  /* WhatsApp flotante */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 68px;
+    height: 68px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    z-index: 1000;
+    transition: all 0.2s;
+    animation: pulse-color 1.5s infinite;
+  }
+
+  @keyframes pulse-color {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); transform: scale(1);}
+    70% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); transform: scale(1.05);}
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); transform: scale(1);}
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.12);
+    background: #1da15a;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem 0.5rem;
+    border-top: 3px dotted #ffcf8a;
+    margin-top: 2rem;
+    color: #9b6e3e;
+    font-weight: 500;
+  }
+
+  @media (max-width: 780px) {
+    .hero h1 { font-size: 2.2rem; }
+    .logo { max-width: 220px; }
+    .section-title { font-size: 1.8rem; }
+    .card h3 { font-size: 1.4rem; }
+    .number { font-size: 1.4rem; }
+    .btn-primary { padding: 0.8rem 1.6rem; font-size: 1rem; }
+    .content-overlay { margin-top: -60px; }
+    .hero::after { height: 55px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding-bottom: 6rem; }
+    .logo { max-width: 170px; }
+  }
+
+  .badge-fresh {
+    background: #ffecb3;
+    border-radius: 30px;
+    padding: 0.4rem 1rem;
+    display: inline-block;
+    font-weight: 700;
+    color: #c7580a;
+    margin-bottom: 1rem;
+  }
+
+  .price span:after {
+    content: " MXN";
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <img src="logo.png" alt="Ensalada Exprés Logo" class="logo" onerror="this.style.display='none'">
+  <h1>Ensalada Exprés</h1>
+  <div class="hero-tagline">Fresca, rápida y a tu gusto 🥗</div>
+  <a href="https://wa.me/525632625090?text=Hola%2C%20me%20encantaría%20pedir%20una%20ensalada%20🥗" class="btn-primary">
+    📱 Pedir por WhatsApp →
+  </a>
+</section>
+
+<div class="content-overlay">
+  <div class="container">
+    <h2 class="section-title">🥗 CREA TU ENSALADA</h2>
+    <div class="cards">
+      <div class="card">
+        <h3><span>🥬</span> Base</h3>
+        <ul><li>Lechuga fresca</li><li>Pasta (fría)</li></ul>
+      </div>
+      <div class="card">
+        <h3><span>🍗</span> 1 Proteína</h3>
+        <ul><li>Pollo a la plancha</li><li>Atún en agua</li><li>Queso panela</li><li>Jamón de pavo</li></ul>
+      </div>
+      <div class="card">
+        <h3><span>🥒</span> 2 Verduras</h3>
+        <ul><li>Pepino</li><li>Zanahoria rallada</li><li>Jícama crujiente</li></ul>
+      </div>
+      <div class="card">
+        <h3><span>🍓</span> 2 Frutas</h3>
+        <ul><li>Mango</li><li>Fresa</li><li>Manzana verde</li><li>Uvas</li></ul>
+      </div>
+      <div class="card">
+        <h3><span>✨</span> Complementos</h3>
+        <ul><li>Nuez / Almendra</li><li>Arándanos deshidratados</li><li>Queso parmesano</li><li>Miel de agave</li><li>Aceite de oliva</li></ul>
+      </div>
+      <div class="card">
+        <h3><span>🥄</span> Aderezos</h3>
+        <ul><li>Mil islas</li><li>Blue cheese</li><li>Ranch</li><li>Mostaza miel</li></ul>
+      </div>
+    </div>
+
+    <h2 class="section-title">⭐ IDEAS DE ENSALADAS</h2>
+    <div class="salad-grid">
+      <div class="salad">
+        <img src="en1.png" alt="Pollo Tropical" onerror="this.src='https://placehold.co/600x400?text=en1'">
+        <div class="salad-content"><h4>🥭 Pollo Tropical</h4><p>Pollo jugoso, mango, uvas, pepino y mostaza miel.</p></div>
+      </div>
+      <div class="salad">
+        <img src="en2.png" alt="Fresa & Frutal" onerror="this.src='https://placehold.co/600x400?text=en2'">
+        <div class="salad-content"><h4>🍓 Fresa & Frutal</h4><p>Queso panela, fresa, manzana y arándanos glaseados.</p></div>
+      </div>
+      <div class="salad">
+        <img src="en3.png" alt="Atún Clásica" onerror="this.src='https://placehold.co/600x400?text=en3'">
+        <div class="salad-content"><h4>🐟 Atún Clásica</h4><p>Atún, pepino fresco, jícama y aderezo ranch.</p></div>
+      </div>
+      <div class="salad">
+        <img src="en4.png" alt="Campestre" onerror="this.src='https://placehold.co/600x400?text=en4'">
+        <div class="salad-content"><h4>🌿 Campestre</h4><p>Jamón de pavo, manzana, uvas y blue cheese.</p></div>
+      </div>
+    </div>
+
+    <div class="prices">
+      <div class="price"><h3>🥗 Ensalada Completa</h3><span>35</span></div>
+      <div class="price"><h3>➕ Extra Ingrediente</h3><span>10</span></div>
+      <div class="price"><h3>🍗 Extra Proteína</h3><span>15</span></div>
+    </div>
+
+    <h2 class="section-title">¿Cómo pedir?</h2>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><p>Elige tus ingredientes</p></div>
+      <div class="step-item"><div class="step-num">2</div><p>Envía tu combo por WhatsApp</p></div>
+      <div class="step-item"><div class="step-num">3</div><p>Recibe en casa u oficina</p></div>
+      <div class="step-item"><div class="step-num">4</div><p>¡Disfruta saludable!</p></div>
+    </div>
+
+    <div class="contact">
+      <h2>📱 Haz tu pedido ahora</h2>
+      <div class="badge-fresh">🌟 Atención personalizada por WhatsApp</div>
+      <div class="number">📞 56 3262 5090</div>
+      <a href="https://wa.me/525632625090?text=Hola%2C%20quiero%20armar%20mi%20ensalada%20🥗" class="btn-primary" style="background:#f68b1f; box-shadow:0 6px 14px #f68b1f80;">🥑 Armar mi ensalada →</a>
+    </div>
+  </div>
+</div>
+
+<a class="whatsapp-float" href="https://wa.me/525632625090?text=Hola%2C%20me%20encantaría%20saber%20más%20de%20las%20ensaladas%20🥗" aria-label="WhatsApp">💬</a>
+
+<footer class="footer">
+  <p>Ensalada Exprés — Hecho con ingredientes frescos, pasión y rapidez.</p>
+  <p style="margin-top: 12px;">© 2025 • ¡Come rico y sano!</p>
+</footer>
+
+</body>
+</html>
