@@ -793,31 +793,34 @@
     document.querySelectorAll('.idea-card').forEach(card => card.style.borderColor = 'transparent');
   }
 
-  function enviarPedidoCompleto() {
-    if (carrito.length === 0) {
-      alert("Agrega al menos una ensalada antes de enviar el pedido.");
-      return;
-    }
-    let mensaje = "Hola 👋, quiero hacer el siguiente pedido:\n\n";
-    let numero = 1;
-    let totalGlobal = 0;
-    for (let item of carrito) {
-      const e = item.ensalada;
-      totalGlobal += e.precio;
-      mensaje += `🥗 Ensalada ${numero}:\n`;
-      mensaje += `🥬 Base: ${e.baseStr}\n`;
-      mensaje += `🍗 Proteínas: ${e.proteinas.join(', ') || 'Ninguna'}\n`;
-      mensaje += `🥒 Verduras: ${e.verduras.join(', ') || 'Ninguna'}\n`;
-      mensaje += `🍓 Frutas: ${e.frutas.join(', ') || 'Ninguna'}\n`;
-      mensaje += `✨ Complementos: ${e.extras.join(', ') || 'Ninguno'}\n`;
-      mensaje += `🥄 Aderezo: ${e.aderezo}\n`;
-      mensaje += `💰 Precio: $${e.precio} MXN\n\n`;
-      numero++;
-    }
-    mensaje += `\n TOTAL DEL PEDIDO: $${totalGlobal} MXN\n`;
-    mensaje += ` Dirección de envío: (escribe aquí)\n`;
-    window.open(`https://wa.me/525632625090?text=${encodeURIComponent(mensaje)}`, '_blank');
+function enviarPedidoCompleto() {
+  if (carrito.length === 0) {
+    alert("Agrega al menos una ensalada antes de enviar el pedido.");
+    return;
   }
+  let mensaje = "Hola 👋, quiero hacer el siguiente pedido:\n\n";
+  mensaje += "⚠️ *IMPORTANTE: El precio es calculado automáticamente. No modifiques los montos.* ⚠️\n\n";
+  let numero = 1;
+  let totalGlobal = 0;
+  for (let item of carrito) {
+    const e = item.ensalada;
+    totalGlobal += e.precio;
+    mensaje += `🥗 Ensalada ${numero}:\n`;
+    mensaje += `🥬 Base: ${e.baseStr}\n`;
+    mensaje += `🍗 Proteínas: ${e.proteinas.join(', ') || 'Ninguna'}\n`;
+    mensaje += `🥒 Verduras: ${e.verduras.join(', ') || 'Ninguna'}\n`;
+    mensaje += `🍓 Frutas: ${e.frutas.join(', ') || 'Ninguna'}\n`;
+    mensaje += `✨ Complementos: ${e.extras.join(', ') || 'Ninguno'}\n`;
+    mensaje += `🥄 Aderezo: ${e.aderezo}\n`;
+    mensaje += `💰 Precio: $${e.precio} MXN\n\n`;
+    numero++;
+  }
+  mensaje += `\n TOTAL DEL PEDIDO (automático): $${totalGlobal} MXN\n`;
+  mensaje += ` Dirección de envío: (escribe aquí)\n`;
+  mensaje += `_Si modificas el precio, tu pedido podría ser cancelado._`;
+  
+  window.open(`https://wa.me/525632625090?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
 
   // Inicializar eventos de las ideas
   function initIdeas() {
