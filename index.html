@@ -243,15 +243,9 @@
     cursor: pointer;
   }
 
-  .idea-card.seleccionada {
-    border-color: #f68b1f;
-    background: #fff7e8;
-    transform: scale(1.02);
-    box-shadow: 0 12px 24px rgba(246,139,31,0.2);
-  }
-
   .idea-card:hover {
     transform: translateY(-4px);
+    border-color: #ffc857;
   }
 
   .idea-card img {
@@ -405,7 +399,7 @@
         <h2 class="section-title">🛒 Arma tu ensalada</h2>
         <div id="editModeIndicator" class="indicador-edicion" style="display: none;">✏️ Editando ensalada</div>
         <div class="pedido-grid">
-          <!-- Base: ahora con checkboxes (pueden ser ambas) -->
+          <!-- Base: checkboxes (pueden ser ambas) -->
           <div class="grupo">
             <h3>🥬 Base (elige una o ambas)</h3>
             <label><input type="checkbox" class="base-opcion" value="Lechuga"> Lechuga fresca</label>
@@ -459,7 +453,7 @@
         </div>
       </div>
 
-      <!-- SECCIÓN IDEAS DE ENSALADA -->
+      <!-- SECCIÓN IDEAS DE ENSALADA (ahora agregan directamente al carrito) -->
       <div class="ideas-section">
         <h2 class="section-title">⭐ Ideas de ensalada</h2>
         <div class="ideas-grid" id="ideasGrid">
@@ -468,7 +462,7 @@
             <div class="idea-info">
               <h4>🥭 Pollo Tropical</h4>
               <p>Pollo, mango, uvas, pepino, mostaza miel</p>
-              <button class="btn-idea">Seleccionar</button>
+              <button class="btn-idea">Seleccionar y agregar</button>
             </div>
           </div>
           <div class="idea-card" data-idea="fresa_frutal">
@@ -476,7 +470,7 @@
             <div class="idea-info">
               <h4>🍓 Fresa & Frutal</h4>
               <p>Queso panela, fresa, manzana, arándanos</p>
-              <button class="btn-idea">Seleccionar</button>
+              <button class="btn-idea">Seleccionar y agregar</button>
             </div>
           </div>
           <div class="idea-card" data-idea="atun_clasica">
@@ -484,7 +478,7 @@
             <div class="idea-info">
               <h4>🐟 Atún Clásica</h4>
               <p>Atún, pepino, jícama, ranch</p>
-              <button class="btn-idea">Seleccionar</button>
+              <button class="btn-idea">Seleccionar y agregar</button>
             </div>
           </div>
           <div class="idea-card" data-idea="campestre">
@@ -492,7 +486,7 @@
             <div class="idea-info">
               <h4>🌿 Campestre</h4>
               <p>Jamón, manzana, uvas, blue cheese</p>
-              <button class="btn-idea">Seleccionar</button>
+              <button class="btn-idea">Seleccionar y agregar</button>
             </div>
           </div>
         </div>
@@ -516,29 +510,25 @@
 </div>
 
 <footer class="footer">
-  <p>🥗 Ensalada Exprés — Ingredientes frescos, preparación rápida</p>
+  <p>🥗 Ensalada Exprés — Ingredientes frescos, preparación rápida. </p>
   <p>© 2025 • ¡Come rico y sano!</p>
 </footer>
 
 <script>
-  // ------------------------- LÓGICA DE PRECIOS (con base múltiple) -------------------------
-  function calcularPrecioDesdeFormulario() {
+  // ------------------------- LÓGICA DE PRECIOS -------------------------
+  function calcularPrecioDesdeDatos(ensaladaData) {
     let total = 35; // precio base
-    // Proteínas: primera gratis, extra +15
-    const proteinas = document.querySelectorAll('.proteina:checked').length;
+    const proteinas = ensaladaData.proteinas.length;
     if (proteinas > 1) total += (proteinas - 1) * 15;
-    // Verduras: primeras 2 gratis, extra +10
-    const verduras = document.querySelectorAll('.verdura:checked').length;
+    const verduras = ensaladaData.verduras.length;
     if (verduras > 2) total += (verduras - 2) * 10;
-    // Frutas: primeras 2 gratis, extra +10
-    const frutas = document.querySelectorAll('.fruta:checked').length;
+    const frutas = ensaladaData.frutas.length;
     if (frutas > 2) total += (frutas - 2) * 10;
-    // Complementos y aderezo gratis
     return total;
   }
 
-  // Obtener objeto completo de la ensalada actual (incluye bases múltiples)
-  function getCurrentEnsalada() {
+  // Construir objeto ensalada a partir de los checkboxes/radios del formulario
+  function getCurrentEnsaladaFromForm() {
     const bases = Array.from(document.querySelectorAll('.base-opcion:checked')).map(cb => cb.value);
     const baseStr = bases.length ? bases.join(' + ') : 'Ninguna base (selecciona al menos una)';
     const aderezo = document.querySelector('input[name="aderezo"]:checked').value;
@@ -546,41 +536,50 @@
     const verduras = Array.from(document.querySelectorAll('.verdura:checked')).map(cb => cb.value);
     const frutas = Array.from(document.querySelectorAll('.fruta:checked')).map(cb => cb.value);
     const extras = Array.from(document.querySelectorAll('.extra:checked')).map(cb => cb.value);
-    const precio = calcularPrecioDesdeFormulario();
+    const precio = calcularPrecioDesdeDatos({ proteinas, verduras, frutas });
     return { bases, baseStr, aderezo, proteinas, verduras, frutas, extras, precio };
   }
 
-  // Cargar una ensalada en el formulario (para editar)
-  function cargarEnsaladaEnFormulario(ensalada) {
-    // Bases: checkboxes
-    document.querySelectorAll('.base-opcion').forEach(cb => {
-      cb.checked = ensalada.bases.includes(cb.value);
-    });
-    // Aderezo
-    document.querySelectorAll('input[name="aderezo"]').forEach(radio => {
-      radio.checked = (radio.value === ensalada.aderezo);
-    });
-    // Proteínas
-    document.querySelectorAll('.proteina').forEach(cb => {
-      cb.checked = ensalada.proteinas.includes(cb.value);
-    });
-    // Verduras
-    document.querySelectorAll('.verdura').forEach(cb => {
-      cb.checked = ensalada.verduras.includes(cb.value);
-    });
-    // Frutas
-    document.querySelectorAll('.fruta').forEach(cb => {
-      cb.checked = ensalada.frutas.includes(cb.value);
-    });
-    // Extras
-    document.querySelectorAll('.extra').forEach(cb => {
-      cb.checked = ensalada.extras.includes(cb.value);
-    });
+  // Crear ensalada a partir de una idea predefinida
+  function crearEnsaladaDesdeIdea(ideaId) {
+    let bases = ['Lechuga'];  // por defecto lechuga
+    let aderezo = 'Mil Islas';
+    let proteinas = [];
+    let verduras = [];
+    let frutas = [];
+    let extras = [];
+
+    if (ideaId === 'pollo_tropical') {
+      proteinas = ['Pollo'];
+      verduras = ['Pepino'];
+      frutas = ['Mango', 'Uvas'];
+      aderezo = 'Mostaza Miel';
+    }
+    else if (ideaId === 'fresa_frutal') {
+      proteinas = ['Queso panela'];
+      frutas = ['Fresa', 'Manzana verde'];
+      extras = ['Arándanos'];
+      aderezo = 'Ranch';
+    }
+    else if (ideaId === 'atun_clasica') {
+      proteinas = ['Atún'];
+      verduras = ['Pepino', 'Jícama'];
+      aderezo = 'Ranch';
+    }
+    else if (ideaId === 'campestre') {
+      proteinas = ['Jamón de pavo'];
+      frutas = ['Manzana verde', 'Uvas'];
+      extras = ['Nuez'];
+      aderezo = 'Blue Cheese';
+    }
+    const baseStr = bases.join(' + ');
+    const precio = calcularPrecioDesdeDatos({ proteinas, verduras, frutas });
+    return { bases, baseStr, aderezo, proteinas, verduras, frutas, extras, precio };
   }
 
   // ------------------------- CARRITO Y EDICIÓN -------------------------
-  let carrito = []; // cada elemento: { ensalada }
-  let editandoIndex = null; // índice de la ensalada que se está editando, null si no
+  let carrito = [];
+  let editandoIndex = null;
 
   function actualizarCarritoUI() {
     const contenedor = document.getElementById('listaCarrito');
@@ -615,7 +614,7 @@
     contenedor.innerHTML = html;
     totalSpan.textContent = totalGeneral;
 
-    // Eventos para eliminar (evitamos que el clic en eliminar active la edición)
+    // Eventos eliminar
     document.querySelectorAll('.btn-eliminar').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -627,7 +626,7 @@
       });
     });
 
-    // Evento para editar: al hacer clic en el item (excepto el botón eliminar)
+    // Evento editar (click en el item)
     document.querySelectorAll('.item-carrito').forEach(item => {
       item.addEventListener('click', (e) => {
         if (e.target.classList.contains('btn-eliminar')) return;
@@ -642,11 +641,9 @@
     editandoIndex = index;
     const ensaladaEdit = carrito[index].ensalada;
     cargarEnsaladaEnFormulario(ensaladaEdit);
-    // Cambiar botones
     document.getElementById('addToCartBtn').style.display = 'none';
     document.getElementById('cancelEditBtn').style.display = 'inline-flex';
     document.getElementById('editModeIndicator').style.display = 'inline-block';
-    // Cambiar texto del botón de agregar? Ya oculto, mostramos el de actualizar
     const updateBtn = document.getElementById('updateCartBtn');
     if (!updateBtn) {
       const newBtn = document.createElement('button');
@@ -663,7 +660,11 @@
 
   function actualizarEnsaladaEditada() {
     if (editandoIndex === null) return;
-    const nuevaEnsalada = getCurrentEnsalada();
+    const nuevaEnsalada = getCurrentEnsaladaFromForm();
+    if (nuevaEnsalada.bases.length === 0) {
+      alert("Debes seleccionar al menos una base (Lechuga o Pasta).");
+      return;
+    }
     carrito[editandoIndex].ensalada = nuevaEnsalada;
     cancelarEdicion();
     actualizarCarritoUI();
@@ -679,8 +680,35 @@
     resetFormulario();
   }
 
-  function agregarAlCarrito() {
-    const nueva = getCurrentEnsalada();
+  function cargarEnsaladaEnFormulario(ensalada) {
+    // Bases
+    document.querySelectorAll('.base-opcion').forEach(cb => {
+      cb.checked = ensalada.bases.includes(cb.value);
+    });
+    // Aderezo
+    document.querySelectorAll('input[name="aderezo"]').forEach(radio => {
+      radio.checked = (radio.value === ensalada.aderezo);
+    });
+    // Proteínas
+    document.querySelectorAll('.proteina').forEach(cb => {
+      cb.checked = ensalada.proteinas.includes(cb.value);
+    });
+    // Verduras
+    document.querySelectorAll('.verdura').forEach(cb => {
+      cb.checked = ensalada.verduras.includes(cb.value);
+    });
+    // Frutas
+    document.querySelectorAll('.fruta').forEach(cb => {
+      cb.checked = ensalada.frutas.includes(cb.value);
+    });
+    // Extras
+    document.querySelectorAll('.extra').forEach(cb => {
+      cb.checked = ensalada.extras.includes(cb.value);
+    });
+  }
+
+  function agregarAlCarritoDesdeFormulario() {
+    const nueva = getCurrentEnsaladaFromForm();
     if (nueva.bases.length === 0) {
       alert("Por favor selecciona al menos una base (Lechuga o Pasta).");
       return;
@@ -690,87 +718,27 @@
     resetFormulario();
   }
 
+  function agregarIdeaAlCarrito(ideaId) {
+    const nuevaEnsalada = crearEnsaladaDesdeIdea(ideaId);
+    carrito.push({ ensalada: nuevaEnsalada });
+    actualizarCarritoUI();
+    // Pequeño feedback visual (opcional)
+    const card = document.querySelector(`.idea-card[data-idea="${ideaId}"]`);
+    if (card) {
+      card.style.transform = 'scale(0.98)';
+      setTimeout(() => { card.style.transform = ''; }, 200);
+    }
+  }
+
   function resetFormulario() {
-    // Desmarcar todas las bases
+    // Marcamos solo Lechuga por defecto como base
     document.querySelectorAll('.base-opcion').forEach(cb => cb.checked = false);
-    // Por defecto marcamos lechuga? Para mejor UX, marcamos lechuga por defecto.
-    // pero el usuario puede desmarcar. Mejor dejar sin selección para que elija.
-    // Opcional: marcar lechuga por defecto.
     document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
-    // Desmarcar proteínas, verduras, frutas, extras
+    // Desmarcar todo lo demás
     document.querySelectorAll('.proteina, .verdura, .fruta, .extra').forEach(cb => cb.checked = false);
-    // Aderezo por defecto Mil Islas
     document.querySelector('input[name="aderezo"][value="Mil Islas"]').checked = true;
-    // Quitar selección visual de ideas
-    document.querySelectorAll('.idea-card').forEach(card => card.classList.remove('seleccionada'));
-    // Si estamos en modo edición, salir
-    if (editandoIndex !== null) cancelarEdicion();
-  }
-
-  // ------------------------- IDEAS DE ENSALADA (con selección visual y carga) -------------------------
-  function cargarIdea(ideaId) {
-    resetFormulario(); // limpia todo y deja lechuga marcada como base por defecto (por resetFormulario)
-    // Ajustamos según la idea
-    if (ideaId === 'pollo_tropical') {
-      document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
-      document.querySelector('.base-opcion[value="Pasta"]').checked = false;
-      setCheckboxes('.proteina', ['Pollo']);
-      setCheckboxes('.verdura', ['Pepino']);
-      setCheckboxes('.fruta', ['Mango', 'Uvas']);
-      setRadio('aderezo', 'Mostaza Miel');
-    }
-    else if (ideaId === 'fresa_frutal') {
-      document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
-      setCheckboxes('.proteina', ['Queso panela']);
-      setCheckboxes('.fruta', ['Fresa', 'Manzana verde']);
-      setCheckboxes('.extra', ['Arándanos']);
-      setRadio('aderezo', 'Ranch');
-    }
-    else if (ideaId === 'atun_clasica') {
-      document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
-      setCheckboxes('.proteina', ['Atún']);
-      setCheckboxes('.verdura', ['Pepino', 'Jícama']);
-      setRadio('aderezo', 'Ranch');
-    }
-    else if (ideaId === 'campestre') {
-      document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
-      setCheckboxes('.proteina', ['Jamón de pavo']);
-      setCheckboxes('.fruta', ['Manzana verde', 'Uvas']);
-      setCheckboxes('.extra', ['Nuez']);
-      setRadio('aderezo', 'Blue Cheese');
-    }
-  }
-
-  function setCheckboxes(selector, valores) {
-    document.querySelectorAll(selector).forEach(cb => {
-      cb.checked = valores.includes(cb.value);
-    });
-  }
-  function setRadio(name, valor) {
-    document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
-      if (radio.value === valor) radio.checked = true;
-    });
-  }
-
-  function initIdeas() {
-    const ideasCards = document.querySelectorAll('.idea-card');
-    ideasCards.forEach(card => {
-      const btn = card.querySelector('.btn-idea');
-      const ideaId = card.dataset.idea;
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        ideasCards.forEach(c => c.classList.remove('seleccionada'));
-        card.classList.add('seleccionada');
-        cargarIdea(ideaId);
-      });
-      card.addEventListener('click', (e) => {
-        if (e.target.tagName !== 'BUTTON') {
-          ideasCards.forEach(c => c.classList.remove('seleccionada'));
-          card.classList.add('seleccionada');
-          cargarIdea(ideaId);
-        }
-      });
-    });
+    // Quitar selección visual de ideas (opcional)
+    document.querySelectorAll('.idea-card').forEach(card => card.style.borderColor = 'transparent');
   }
 
   // Enviar pedido completo
@@ -795,19 +763,38 @@
       mensaje += `💰 Precio: $${e.precio} MXN\n\n`;
       numero++;
     }
-    mensaje += `\n TOTAL DEL PEDIDO: $${totalGlobal} MXN\n`;
+    mensaje += `\n🔥 TOTAL DEL PEDIDO: $${totalGlobal} MXN\n`;
     mensaje += `📍 Dirección de envío: (escribe aquí)\n`;
+    mensaje += `⏰ Horario preferido: (opcional)`;
     window.open(`https://wa.me/525632625090?text=${encodeURIComponent(mensaje)}`, '_blank');
   }
 
-  // Event listeners
-  document.getElementById('addToCartBtn').addEventListener('click', agregarAlCarrito);
+  // Inicializar eventos de las ideas
+  function initIdeas() {
+    const ideasCards = document.querySelectorAll('.idea-card');
+    ideasCards.forEach(card => {
+      const btn = card.querySelector('.btn-idea');
+      const ideaId = card.dataset.idea;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        agregarIdeaAlCarrito(ideaId);
+      });
+      card.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'BUTTON') {
+          agregarIdeaAlCarrito(ideaId);
+        }
+      });
+    });
+  }
+
+  // Event listeners del formulario
+  document.getElementById('addToCartBtn').addEventListener('click', agregarAlCarritoDesdeFormulario);
   document.getElementById('resetFormBtn').addEventListener('click', resetFormulario);
   document.getElementById('cancelEditBtn').addEventListener('click', cancelarEdicion);
   document.getElementById('enviarPedidoBtn').addEventListener('click', enviarPedidoCompleto);
-  // Si existe updateCartBtn, lo manejamos dinámicamente
 
-  resetFormulario(); // para dejar lechuga marcada por defecto
+  // Inicializar
+  resetFormulario();
   initIdeas();
   actualizarCarritoUI();
 </script>
