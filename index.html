@@ -28,7 +28,7 @@
     z-index: 5;
   }
 
-  /* Hero sin botón de WhatsApp */
+  /* Hero */
   .hero {
     background: linear-gradient(125deg, #ffd89b 0%, #c7e9b0 100%);
     padding: 2rem 1.5rem 5rem 1.5rem;
@@ -120,6 +120,10 @@
     height: fit-content;
     position: sticky;
     top: 20px;
+    transition: all 0.3s;
+  }
+  .carrito:target {
+    box-shadow: 0 0 0 3px #ffb347;
   }
 
   /* Tarjeta de armado */
@@ -289,10 +293,19 @@
   .carrito h3 {
     font-size: 1.5rem;
     color: #d45c2c;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+  .edit-hint {
+    font-size: 0.75rem;
+    color: #f68b1f;
+    background: #fff0db;
+    display: inline-block;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
   }
 
   .lista-ensaladas {
@@ -312,6 +325,7 @@
   }
   .item-carrito:hover {
     background: #fff2e0;
+    transform: scale(1.01);
   }
 
   .item-carrito .nombre-item {
@@ -367,6 +381,29 @@
     display: inline-block;
   }
 
+  /* Toast message */
+  .toast-msg {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2c5e2a;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 60px;
+    font-weight: 500;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    animation: fadeInOut 3s ease forwards;
+    pointer-events: none;
+  }
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  }
+
   .footer {
     text-align: center;
     padding: 2rem 0.5rem;
@@ -399,13 +436,11 @@
         <h2 class="section-title">🛒 Arma tu ensalada</h2>
         <div id="editModeIndicator" class="indicador-edicion" style="display: none;">✏️ Editando ensalada</div>
         <div class="pedido-grid">
-          <!-- Base: checkboxes (pueden ser ambas) -->
           <div class="grupo">
             <h3>🥬 Base (elige una o ambas)</h3>
             <label><input type="checkbox" class="base-opcion" value="Lechuga"> Lechuga fresca</label>
             <label><input type="checkbox" class="base-opcion" value="Pasta"> Pasta fría</label>
           </div>
-          <!-- Proteínas -->
           <div class="grupo">
             <h3>🍗 Proteínas (1ra gratis, extra +$15)</h3>
             <label><input type="checkbox" class="proteina" value="Pollo"> Pollo a la plancha</label>
@@ -413,14 +448,12 @@
             <label><input type="checkbox" class="proteina" value="Queso panela"> Queso panela</label>
             <label><input type="checkbox" class="proteina" value="Jamón de pavo"> Jamón de pavo</label>
           </div>
-          <!-- Verduras -->
           <div class="grupo">
             <h3>🥒 Verduras (2 gratis, extra +$10)</h3>
             <label><input type="checkbox" class="verdura" value="Pepino"> Pepino</label>
             <label><input type="checkbox" class="verdura" value="Zanahoria"> Zanahoria rallada</label>
             <label><input type="checkbox" class="verdura" value="Jícama"> Jícama crujiente</label>
           </div>
-          <!-- Frutas -->
           <div class="grupo">
             <h3>🍓 Frutas (2 gratis, extra +$10)</h3>
             <label><input type="checkbox" class="fruta" value="Mango"> Mango</label>
@@ -428,7 +461,6 @@
             <label><input type="checkbox" class="fruta" value="Manzana verde"> Manzana verde</label>
             <label><input type="checkbox" class="fruta" value="Uvas"> Uvas</label>
           </div>
-          <!-- Complementos -->
           <div class="grupo">
             <h3>✨ Complementos (sin costo)</h3>
             <label><input type="checkbox" class="extra" value="Nuez"> Nuez / Almendra</label>
@@ -437,7 +469,6 @@
             <label><input type="checkbox" class="extra" value="Miel"> Miel de agave</label>
             <label><input type="checkbox" class="extra" value="Aceite"> Aceite de oliva</label>
           </div>
-          <!-- Aderezo -->
           <div class="grupo">
             <h3>🥄 Aderezo (sin costo)</h3>
             <label><input type="radio" name="aderezo" value="Mil Islas" checked> Mil Islas</label>
@@ -453,7 +484,7 @@
         </div>
       </div>
 
-      <!-- SECCIÓN IDEAS DE ENSALADA (ahora agregan directamente al carrito) -->
+      <!-- IDEAS DE ENSALADA -->
       <div class="ideas-section">
         <h2 class="section-title">⭐ Ideas de ensalada</h2>
         <div class="ideas-grid" id="ideasGrid">
@@ -494,8 +525,9 @@
     </div>
 
     <!-- COLUMNA DERECHA: CARRITO -->
-    <div class="carrito">
+    <div class="carrito" id="carritoSection">
       <h3>🛍️ Tu pedido</h3>
+      <div class="edit-hint">💡 Haz clic en cualquier ensalada para modificarla</div>
       <div id="listaCarrito" class="lista-ensaladas">
         <p style="color:#aaa; text-align:center;">Aún no hay ensaladas</p>
       </div>
@@ -510,14 +542,14 @@
 </div>
 
 <footer class="footer">
-  <p>🥗 Ensalada Exprés — Ingredientes frescos, preparación rápida. </p>
+  <p>🥗 Ensalada Exprés — Ingredientes frescos, preparación rápida.</p>
   <p>© 2025 • ¡Come rico y sano!</p>
 </footer>
 
 <script>
   // ------------------------- LÓGICA DE PRECIOS -------------------------
   function calcularPrecioDesdeDatos(ensaladaData) {
-    let total = 35; // precio base
+    let total = 35;
     const proteinas = ensaladaData.proteinas.length;
     if (proteinas > 1) total += (proteinas - 1) * 15;
     const verduras = ensaladaData.verduras.length;
@@ -527,10 +559,9 @@
     return total;
   }
 
-  // Construir objeto ensalada a partir de los checkboxes/radios del formulario
   function getCurrentEnsaladaFromForm() {
     const bases = Array.from(document.querySelectorAll('.base-opcion:checked')).map(cb => cb.value);
-    const baseStr = bases.length ? bases.join(' + ') : 'Ninguna base (selecciona al menos una)';
+    const baseStr = bases.length ? bases.join(' + ') : 'Ninguna base';
     const aderezo = document.querySelector('input[name="aderezo"]:checked').value;
     const proteinas = Array.from(document.querySelectorAll('.proteina:checked')).map(cb => cb.value);
     const verduras = Array.from(document.querySelectorAll('.verdura:checked')).map(cb => cb.value);
@@ -540,9 +571,8 @@
     return { bases, baseStr, aderezo, proteinas, verduras, frutas, extras, precio };
   }
 
-  // Crear ensalada a partir de una idea predefinida
   function crearEnsaladaDesdeIdea(ideaId) {
-    let bases = ['Lechuga'];  // por defecto lechuga
+    let bases = ['Lechuga'];
     let aderezo = 'Mil Islas';
     let proteinas = [];
     let verduras = [];
@@ -580,6 +610,24 @@
   // ------------------------- CARRITO Y EDICIÓN -------------------------
   let carrito = [];
   let editandoIndex = null;
+
+  function mostrarToast(mensaje) {
+    const existingToast = document.querySelector('.toast-msg');
+    if (existingToast) existingToast.remove();
+    const toast = document.createElement('div');
+    toast.className = 'toast-msg';
+    toast.textContent = mensaje;
+    document.body.appendChild(toast);
+    setTimeout(() => { if (toast) toast.remove(); }, 3000);
+  }
+
+  function scrollAlCarrito() {
+    const carritoEl = document.getElementById('carritoSection');
+    carritoEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    carritoEl.style.transition = 'box-shadow 0.3s';
+    carritoEl.style.boxShadow = '0 0 0 3px #ffb347';
+    setTimeout(() => { carritoEl.style.boxShadow = ''; }, 1000);
+  }
 
   function actualizarCarritoUI() {
     const contenedor = document.getElementById('listaCarrito');
@@ -623,6 +671,7 @@
         if (editandoIndex === idx) cancelarEdicion();
         else if (editandoIndex !== null && editandoIndex > idx) editandoIndex--;
         actualizarCarritoUI();
+        mostrarToast('🗑️ Ensalada eliminada del pedido');
       });
     });
 
@@ -632,6 +681,9 @@
         if (e.target.classList.contains('btn-eliminar')) return;
         const idx = parseInt(item.dataset.index);
         iniciarEdicion(idx);
+        // Resaltar visualmente
+        item.style.backgroundColor = '#ffe6c4';
+        setTimeout(() => { item.style.backgroundColor = ''; }, 500);
       });
     });
   }
@@ -656,6 +708,9 @@
     } else {
       updateBtn.style.display = 'inline-flex';
     }
+    // Scroll suave al formulario para editar
+    document.getElementById('formularioEns').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    mostrarToast('✏️ Editando ensalada - modifica los ingredientes y actualiza');
   }
 
   function actualizarEnsaladaEditada() {
@@ -668,6 +723,8 @@
     carrito[editandoIndex].ensalada = nuevaEnsalada;
     cancelarEdicion();
     actualizarCarritoUI();
+    mostrarToast('✅ Ensalada actualizada correctamente');
+    scrollAlCarrito();
   }
 
   function cancelarEdicion() {
@@ -681,27 +738,21 @@
   }
 
   function cargarEnsaladaEnFormulario(ensalada) {
-    // Bases
     document.querySelectorAll('.base-opcion').forEach(cb => {
       cb.checked = ensalada.bases.includes(cb.value);
     });
-    // Aderezo
     document.querySelectorAll('input[name="aderezo"]').forEach(radio => {
       radio.checked = (radio.value === ensalada.aderezo);
     });
-    // Proteínas
     document.querySelectorAll('.proteina').forEach(cb => {
       cb.checked = ensalada.proteinas.includes(cb.value);
     });
-    // Verduras
     document.querySelectorAll('.verdura').forEach(cb => {
       cb.checked = ensalada.verduras.includes(cb.value);
     });
-    // Frutas
     document.querySelectorAll('.fruta').forEach(cb => {
       cb.checked = ensalada.frutas.includes(cb.value);
     });
-    // Extras
     document.querySelectorAll('.extra').forEach(cb => {
       cb.checked = ensalada.extras.includes(cb.value);
     });
@@ -716,32 +767,32 @@
     carrito.push({ ensalada: nueva });
     actualizarCarritoUI();
     resetFormulario();
+    mostrarToast('🥗 Ensalada agregada al pedido');
+    scrollAlCarrito();
   }
 
   function agregarIdeaAlCarrito(ideaId) {
     const nuevaEnsalada = crearEnsaladaDesdeIdea(ideaId);
     carrito.push({ ensalada: nuevaEnsalada });
     actualizarCarritoUI();
-    // Pequeño feedback visual (opcional)
+    // Feedback visual en la tarjeta
     const card = document.querySelector(`.idea-card[data-idea="${ideaId}"]`);
     if (card) {
       card.style.transform = 'scale(0.98)';
       setTimeout(() => { card.style.transform = ''; }, 200);
     }
+    mostrarToast(`✨ Ensalada "${card?.querySelector('h4')?.innerText || ideaId}" agregada al pedido`);
+    scrollAlCarrito();
   }
 
   function resetFormulario() {
-    // Marcamos solo Lechuga por defecto como base
     document.querySelectorAll('.base-opcion').forEach(cb => cb.checked = false);
     document.querySelector('.base-opcion[value="Lechuga"]').checked = true;
-    // Desmarcar todo lo demás
     document.querySelectorAll('.proteina, .verdura, .fruta, .extra').forEach(cb => cb.checked = false);
     document.querySelector('input[name="aderezo"][value="Mil Islas"]').checked = true;
-    // Quitar selección visual de ideas (opcional)
     document.querySelectorAll('.idea-card').forEach(card => card.style.borderColor = 'transparent');
   }
 
-  // Enviar pedido completo
   function enviarPedidoCompleto() {
     if (carrito.length === 0) {
       alert("Agrega al menos una ensalada antes de enviar el pedido.");
@@ -765,7 +816,6 @@
     }
     mensaje += `\n🔥 TOTAL DEL PEDIDO: $${totalGlobal} MXN\n`;
     mensaje += `📍 Dirección de envío: (escribe aquí)\n`;
-    mensaje += `⏰ Horario preferido: (opcional)`;
     window.open(`https://wa.me/525632625090?text=${encodeURIComponent(mensaje)}`, '_blank');
   }
 
@@ -787,7 +837,7 @@
     });
   }
 
-  // Event listeners del formulario
+  // Event listeners
   document.getElementById('addToCartBtn').addEventListener('click', agregarAlCarritoDesdeFormulario);
   document.getElementById('resetFormBtn').addEventListener('click', resetFormulario);
   document.getElementById('cancelEditBtn').addEventListener('click', cancelarEdicion);
